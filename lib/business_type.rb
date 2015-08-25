@@ -7,12 +7,9 @@ class BusinessType < Base
   end
   private
   def discount_amount
-    if number_of_phones < 50
-      0.75
-    elsif number_of_phones > 50
-      0.50
-    else
-      1
-    end
+    discount.amount
+  end
+  def discount
+    @discount ||= Discount.new(number_of_phones)
   end
 end
