@@ -1,20 +1,22 @@
 class CostCalculator < Base
+  def types_initialized
+    individual_type = IndividualType.new(cost_args)
+    family_type = FamilyType.new(cost_args)
+    business_type = BusinessType.new(cost_args)
+    [ individual_type, family_type, business_type ]
+  end
+
+  def find_type
+    types_initialized.find { |type_initialized| type_initialized.matches?(type) }
+  end
+
   def calculate
-    if type == "individual"
-      number_of_phones * price
-    elsif type == "family"
-      number_of_extra_phones = number_of_phones - 1
-      cost_per_extra_phone = 10
-
-      price + (number_of_extra_phones * cost_per_extra_phone)
-    elsif type == "business"
-      subtotal = number_of_phones * price
-
-      if number_of_phones < 50
-        subtotal * 0.75
-      else
-        subtotal * 0.50
-      end
-    end
+    find_type.perform
+  end
+  private
+  def cost_args
+    { type: 'individual',
+      number_of_phones: number_of_phones,
+      price: price }
   end
 end
