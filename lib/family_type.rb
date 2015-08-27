@@ -1,8 +1,4 @@
 class FamilyType < Base
-  def matches?(type)
-    type == 'family'
-  end
-
   def perform
     subtotal
   end

@@ -1,7 +1,4 @@
 class BusinessType < Base
-  def matches?(type)
-    type == 'business'
-  end
   def perform
     number_of_phones * price * discount_amount
   end
